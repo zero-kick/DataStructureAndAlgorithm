@@ -45,14 +45,28 @@ public class HashTableOperation {
     }
 
     public static void main(String[] args) {
-        // Hash Table 선언
+        /* 1. Hash Table 선언 */
         HashTable hashTable = new HashTable(20);
+
         hashTable.saveData("DeanKim", "01012345678");
         hashTable.saveData("WonyoungJang", "01033335555");
 
-        String returnValue = hashTable.getData("DeanKim");
+        String value1 = hashTable.getData("DeanKim");
+        System.out.println(value1);
+        
+        /* 2. 충돌(Collision) 문제점 */
+        HashTable hashTable2 = new HashTable(20);
 
-        System.out.println(returnValue);
+        hashTable2.saveData("DeanKim", "01012345678");
+        hashTable2.saveData("WonyoungJang", "01033335555");
+        hashTable2.saveData("DayeonLee", "01044558855");
+        hashTable2.saveData("Drake", "01011112222");
+
+        String value2 = hashTable2.getData("DeanKim");
+        System.out.println(value2);      // 01011112222
+        // 현재 구현되어있는 hash function은 key의 첫번째 알파벳을 가져다가 주소 공간을 할당하도록 되어있다.
+        // 따라서 가장 마지막에 입력된 key인 Drake의 value가 해당 주소 공간에 저장되어 있는 것
+        // > 이러한 충돌 해결을 위해서는 saveData 시 별도의 자료구조를 이용한 로직 개선이 필요하다.
 
     }
 }
