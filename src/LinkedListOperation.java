@@ -175,26 +175,25 @@ public class LinkedListOperation {
         }
 
         public void addNodeInside(T data, T isData) {
+            // 1. data 노드를 isData 뒤에 놓기
             Node<T> bfNode = searchFromHead(isData);
-            Node<T> nextNode = searchFromTail(bfNode.next.data);
+
+            Node<T> nextNode = null;
+            if(bfNode != null) {
+                nextNode = bfNode.next;
+            }
 
             if(bfNode == null) {
                 this.addNode(data);
             } else {
-                Node<T> newNode = new Node<T>(data);
+                bfNode.next = new Node<T>(data);
+                bfNode.next.prev = bfNode;
+                bfNode.next.next = nextNode;
+            }
 
-                Node<T> bfNodeTmp = nextNode.prev;
-                Node<T> nextNodeTmp = bfNode.next;
-
-                bfNode.next = newNode;
-                bfNode.next.next = nextNodeTmp;
-
-                if(nextNode != null) {
-                    nextNode.prev = newNode;
-                    nextNode.prev.prev = bfNodeTmp;
-                } else {
-                    newNode.next = newNode;
-                }
+            // 2. data 노드를 next의 앞에 놓기
+            if(nextNode != null) {
+                nextNode.prev = bfNode.next;
             }
         }
     }
