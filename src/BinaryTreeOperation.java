@@ -154,8 +154,64 @@ public class BinaryTreeOperation {
                 }
                 return true;
             }
+            // case 3. Child Node가 두 개인 Node 삭제
+            else {
+                // case 3-1. 삭제할 Node의 오른쪽 Child 중 가장 작은 값을 삭제할 Node의 Parent가 가리키도록 한다.
+                //           (삭제할 Node가 Parent Node의 왼쪽에 있을 때)
+                if (currParentNode.value > findVal) {
+                    Node changeNode = currNode.right;
+                    Node changeParentNode = currNode.right;
+                    while (changeNode.left != null) {
+                        changeParentNode = changeNode;
+                        changeNode = changeNode.left;
+                    }
+                    // case 3-1-1. 가장 작은 값을 가진 Node(changeNode)가 Child Node를 갖지 않는 경우
+                    if (changeNode.right == null) {
+                        changeParentNode.left = null;
+                    }
+                    // case 3-1-2. 가장 작은 값을 가진 Node(changeNode)가 오른쪽 Child Node를 갖는 경우
+                    else {
+                        changeParentNode.left = changeNode.right;
+                    }
 
-            // TO-DO case 2-3. Child Node가 두 개인 Node 삭제
+                    // 삭제 대상 Node 자리에 changeNode로 대체
+                    currParentNode.left = changeNode;
+
+                    // 기존에 삭제 대상 Node에 연결되어있던 Child를 연결
+                    changeNode.left = currNode.left;
+                    changeNode.right = currNode.right;
+
+                    currNode = null;
+
+                }
+                // case 3-2. 삭제할 Node의 오른쪽 Child 중 가장 작은 값을 삭제할 Node의 Parent가 가리키도록 한다.
+                //           (삭제할 Node가 Parent Node의 오른쪽에 있을 때)
+                else {
+                    Node changeNode = currNode.right;
+                    Node changeParentNode = currNode.right;
+                    while (changeNode.left != null) {
+                        changeParentNode = changeNode;
+                        changeNode = changeNode.left;
+                    }
+                    // case 3-2-1. 가장 작은 값을 가진 Node(changeNode)가 Child Node를 갖지 않는 경우
+                    if (changeNode.right == null) {
+                        changeParentNode.left = null;
+                    }
+                    // case 3-2-2. 가장 작은 값을 가진 Node(changeNode)가 오른쪽 Child Node를 갖는 경우
+                    else {
+                        changeParentNode.left = changeNode.right;
+                    }
+
+                    // 삭제 대상 Node 자리에 changeNode로 대체
+                    currParentNode.right = changeNode;
+
+                    // 기존에 삭제 대상 Node에 연결되어있던 Child를 연결
+                    changeNode.left = currNode.left;
+                    changeNode.right = currNode.right;
+
+                    currNode = null;
+                }
+            }
             return true;
         }
     }
@@ -182,6 +238,35 @@ public class BinaryTreeOperation {
         } catch (Exception e) {
             System.out.println("Node does not exist");
         }
+
+        NodeMgmt tree2 = new NodeMgmt();
+
+        tree2.insertNode(10);
+        tree2.insertNode(7);
+        tree2.insertNode(6);
+        tree2.insertNode(8);
+        tree2.insertNode(15);
+        tree2.insertNode(13);
+        tree2.insertNode(11);
+        tree2.insertNode(14);
+        tree2.insertNode(18);
+        tree2.insertNode(16);
+        tree2.insertNode(17);
+        tree2.insertNode(19);
+        tree2.delete(15);
+
+        System.out.println("root : " + tree2.root.value);
+
+        System.out.println("root.left : " + tree2.root.left.value);
+        System.out.println("root.left.left : " + tree2.root.left.left.value);
+        System.out.println("root.left.right : " + tree2.root.left.right.value);
+
+        System.out.println("root.right : " + tree2.root.right.value);
+        System.out.println("root.right.left : " + tree2.root.right.left.value);
+        System.out.println("root.right.right : " + tree2.root.right.right.value);
+
+        System.out.println("root.right.right.left : " + tree2.root.right.right.left.value);
+        System.out.println("root.right.right.right : " + tree2.root.right.right.right.value);
 
     }
 }
